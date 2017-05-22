@@ -64,7 +64,7 @@ void DigitLedDisplay::write(volatile byte address, volatile byte data) {
 	digitalWrite(CS_PIN, HIGH);
 }
 
-void DigitLedDisplay::printDigit(long number) {
+void DigitLedDisplay::printDigit(long number, byte startDigit) {
 	String figure = String(number);
 	int figureLength = figure.length();
 
@@ -74,6 +74,6 @@ void DigitLedDisplay::printDigit(long number) {
 		str[0] = figure[i];
 		str[1] = '\0';
 		parseInt = (int) strtol(str, NULL, 10);
-		table(figureLength - i, parseInt);
+		table(figureLength - i + startDigit, parseInt);
 	}
 }

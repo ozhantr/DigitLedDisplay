@@ -31,7 +31,15 @@ void loop() {
 
   ld.printDigit(44444444);
   delay(500);
+  ld.clear();
 
+  for (int i = 0; i < 100; i++) {
+    ld.printDigit(i);
+
+    /* Start From Digit 4 */
+    ld.printDigit(i, 4);
+    delay(50);
+  }
 
   for (int i = 0; i <= 10; i++) {
     /* Display off */
