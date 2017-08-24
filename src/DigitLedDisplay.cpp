@@ -52,8 +52,7 @@ void DigitLedDisplay::clear() {
 }
 
 void DigitLedDisplay::table(byte address, int val) {
-	byte tableValue;
-	tableValue = pgm_read_byte_near(charTable + val);
+	byte tableValue = pgm_read_byte_near(charTable + val);
 	write(address, tableValue);
 }
 
@@ -75,5 +74,44 @@ void DigitLedDisplay::printDigit(long number, byte startDigit) {
 		str[1] = '\0';
 		parseInt = (int) strtol(str, NULL, 10);
 		table(figureLength - i + startDigit, parseInt);
+	}
+}
+
+void DigitLedDisplay::printDigitAndPeriod(String number) {
+	int figureLength = number.length();
+
+	int parseInt;
+	char str[2];
+	byte buffer[_digitLimit];
+	for(int i=0; i<_digitLimit; i++){
+		buffer[i] = B00000000;
+	}
+	int printedDigits = 0;
+	for(int i = 0; i < figureLength; i++) {
+		if(number[i] != '.'){
+			if(number[i] == ' '){
+				buffer[printedDigits] = B00000000;
+				printedDigits++;
+				continue;
+			}
+			str[0] = number[i];
+			str[1] = '\0';
+			parseInt = (int) strtol(str, NULL, 10);
+			byte tableValue = pgm_read_byte_near(charTable + parseInt);
+			buffer[printedDigits] = tableValue;
+			printedDigits++;
+		}
+		else if(printedDigits > 0 && number[i - 1] != '.'){
+			buffer[printedDigits - 1] = buffer[printedDigits - 1] | B10000000;
+		}
+		else {
+			buffer[printedDigits] = B10000000;
+			printedDigits++;
+		}
+		Serial.println(printedDigits);
+	}
+	
+	for(int i=0; i < _digitLimit; i++){
+		write(i+1, buffer[_digitLimit - i - 1]);
 	}
 }
