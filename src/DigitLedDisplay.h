@@ -1,7 +1,11 @@
 #ifndef DigitLedDisplay_h
 #define DigitLedDisplay_h
 
+#if defined(__AVR__)
 #include <avr/pgmspace.h>
+#elif defined(ESP8266)
+#include <pgmspace.h>
+#endif
 
 #if (ARDUINO >= 100)
 #include <Arduino.h>
@@ -26,6 +30,7 @@ class DigitLedDisplay
 		void setBright(int brightness);
 		void setDigitLimit(int limit);
 		void printDigit(long number, byte startDigit = 0);
+		void printDigitAndPeriod(String number);
 		void write(byte address, byte data);
 		void clear();
 		void on();
