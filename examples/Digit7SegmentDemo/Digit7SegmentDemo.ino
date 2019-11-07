@@ -6,7 +6,7 @@
    7 to DIN,
    6 to CS,
    5 to CLK */
-DigitLedDisplay ld = DigitLedDisplay(7, 5, 6);
+DigitLedDisplay ld = DigitLedDisplay(7, 6, 5);
 
 void setup() {
 

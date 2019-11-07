@@ -1,7 +1,6 @@
 #ifndef DigitLedDisplay_h
 #define DigitLedDisplay_h
 
-//special condition for esp8266
 #if (defined(__AVR__))
 #include <avr\pgmspace.h>
 #else
