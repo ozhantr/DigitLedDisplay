@@ -8,7 +8,6 @@ Install
 
 Or you can copy DigitLedDisplay library to -> arduino\libraries\
 
-### printDigit(long number, byte startDigit = 0)
 -------
 *Start From Digit: Default Value Zero*\
 `digitLedDisplay.printDigit(1234);`\
