@@ -1,9 +1,9 @@
 #ifndef DigitLedDisplay_h
 #define DigitLedDisplay_h
 
-#if defined(__AVR__)
-#include <avr/pgmspace.h>
-#elif defined(ESP8266)
+#if (defined(__AVR__))
+#include <avr\pgmspace.h>
+#else
 #include <pgmspace.h>
 #endif
 
