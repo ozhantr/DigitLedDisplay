@@ -46,7 +46,7 @@ void DigitLedDisplay::off() {
 }
 
 void DigitLedDisplay::clear(byte start) {
-  for (int i = start; i <=_digitLimit; i++) {
+  for (int i = _digitLimit; i >= start; i--) {
 	write(i, B00000000);
   }
 }
@@ -75,7 +75,7 @@ void DigitLedDisplay::printDigit(long number, byte startDigit) {
 
 	int parseInt;
 	char str[2];
-	for(int i = 0; i < figure.length(); i++) {
+	for(int i = figure.length() - 1; i >=0; i--) {
             if (i==0 && figure[i]=='-') {
                 parseInt = -1;
             } else {

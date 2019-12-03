@@ -1,7 +1,17 @@
-This fork has 3 additions/corrections:
+This fork additions/corrections:
 * works under Linux Arduino IDE as well
 * print negative numbers as well
 * optional cleaning space left of printed number
+* new [Digit7SegmentMillis.ino](examples/Digit7SegmentMillis/Digit7SegmentMillis.ino) example 
+  * 8 digit display overflows after 27.7 hours
+  * optimized loop directions for Digit7SegmentMillis example
+  * special display for divisor divi>1  
+    (the "8." on left, not visible during update)
+
+This is 1fps animation generated from Raspberry v1 camera 640x64@665fps raspiraw video.  
+Demonstrates that it takes less than 3/665=4.5ms to update the 8 positions in led:  
+![led.anim.gif](led.anim.gif)
+
 
 DigitLedDisplay
 ==========
