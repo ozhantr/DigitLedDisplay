@@ -14,7 +14,7 @@ Demonstrates that it takes less than 3/665=4.5ms to update the 8 positions in le
 ![led.anim.gif](led.anim.gif)
 
 This is 1fps animation generated from different Raspberry v1 camera 640x64@665fps raspiraw video.  
-Demonstrates the changed default for Digit7SegmentMillis example, now 1/100th seconds precision with decimal point. Every 6th or 7th frame diplay gets updated, valid display with "8." left complete: 
+Demonstrates the changed default for Digit7SegmentMillis example, now 1/100th seconds precision with decimal point. Every 6th or 7th frame display gets updated, valid display with "8." left complete: 
 ![led2.anim.gif](led2.anim.gif)
 
 DigitLedDisplay
