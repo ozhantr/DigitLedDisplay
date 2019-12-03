@@ -12,7 +12,7 @@
    5 to CLK */
 DigitLedDisplay ld = DigitLedDisplay(7, 6, 5);
 
-unsigned long divi = 1;
+unsigned long divi = 10;
 unsigned long last = (millis() - 1) / divi;
 
 void setup() {
@@ -21,6 +21,9 @@ void setup() {
 
   /* Set the digit count */
   ld.setDigitLimit(8);
+
+  /* Set the decimal position, 1/100th second */
+  ld.setDecimalPos(3);
 }
 
 void loop() {

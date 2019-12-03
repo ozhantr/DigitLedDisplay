@@ -16,6 +16,8 @@ DigitLedDisplay::DigitLedDisplay(int dinPin, int csPin, int clkPin) {
 	pinMode(CS_PIN, OUTPUT);
 	pinMode(CLK_PIN, OUTPUT);
 	digitalWrite(CS_PIN, HIGH);
+
+        _decimalPos = 0;
 }
 
 void DigitLedDisplay::setBright(int brightness) {
@@ -36,6 +38,10 @@ void DigitLedDisplay::setDigitLimit(int limit) {
 	write(SHUTDOWN_ADDR, 1);
 }
 
+void DigitLedDisplay::setDecimalPos(int pos) {
+	_decimalPos = pos;
+}
+
 		
 void DigitLedDisplay::on() {
 	write(SHUTDOWN_ADDR, 0x01);
@@ -54,6 +60,8 @@ void DigitLedDisplay::clear(byte start) {
 void DigitLedDisplay::table(byte address, int val) {
 	byte tableValue;
 	tableValue = pgm_read_byte_near(charTable + 1 + val);
+        if (address == _decimalPos)
+            tableValue |= B10000000;
 	write(address, tableValue);
 }
 
