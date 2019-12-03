@@ -45,8 +45,8 @@ void DigitLedDisplay::off() {
 	write(SHUTDOWN_ADDR, 0x00);
 }
 
-void DigitLedDisplay::clear() {
-  for (int i = 1; i <=_digitLimit; i++) {
+void DigitLedDisplay::clear(byte start) {
+  for (int i = start; i <=_digitLimit; i++) {
 	write(i, B00000000);
   }
 }
@@ -67,6 +67,11 @@ void DigitLedDisplay::write(volatile byte address, volatile byte data) {
 void DigitLedDisplay::printDigit(long number, byte startDigit) {
 	String figure = String(number);
 	int figureLength = figure.length();
+
+        if (startDigit > _digitLimit) {
+            startDigit = 0;
+            clear(figureLength + 1);
+        }
 
 	int parseInt;
 	char str[2];

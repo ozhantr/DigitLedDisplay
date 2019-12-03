@@ -31,7 +31,7 @@ class DigitLedDisplay
 		void setDigitLimit(int limit);
 		void printDigit(long number, byte startDigit = 0);
 		void write(byte address, byte data);
-		void clear();
+		void clear(byte start = 1);
 		void on();
 		void off();		
 };
