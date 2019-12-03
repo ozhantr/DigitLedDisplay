@@ -53,7 +53,7 @@ void DigitLedDisplay::clear() {
 
 void DigitLedDisplay::table(byte address, int val) {
 	byte tableValue;
-	tableValue = pgm_read_byte_near(charTable + val);
+	tableValue = pgm_read_byte_near(charTable + 1 + val);
 	write(address, tableValue);
 }
 
@@ -71,9 +71,13 @@ void DigitLedDisplay::printDigit(long number, byte startDigit) {
 	int parseInt;
 	char str[2];
 	for(int i = 0; i < figure.length(); i++) {
+            if (i==0 && figure[i]=='-') {
+                parseInt = -1;
+            } else {
 		str[0] = figure[i];
 		str[1] = '\0';
 		parseInt = (int) strtol(str, NULL, 10);
+            }
 		table(figureLength - i + startDigit, parseInt);
 	}
 }

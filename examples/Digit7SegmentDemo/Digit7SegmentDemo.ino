@@ -25,7 +25,7 @@ void loop() {
   delay(500);
   ld.clear();
 
-  ld.printDigit(22222222);
+  ld.printDigit(-2222222);
   delay(500);
   ld.clear();
 
@@ -37,7 +37,7 @@ void loop() {
     ld.printDigit(i);
 
     /* Start From Digit 4 */
-    ld.printDigit(i, 4);
+    ld.printDigit(-i, 4);
     delay(50);
   }
 
