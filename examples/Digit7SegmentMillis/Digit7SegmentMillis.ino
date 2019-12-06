@@ -33,7 +33,7 @@ void loop() {
   if (last != now) {
     ld.printDigit(last = now, 0xFF);
     if (divi > 1) {
-        ld.write(7, B11111111);
+        ld.write(8, B11111111);
     }
   }
 }
