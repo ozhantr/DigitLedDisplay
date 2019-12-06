@@ -33,7 +33,7 @@ class DigitLedDisplay
 		void setDecimalPos(int pos);
 		void printDigit(long number, byte startDigit = 0);
 		void write(byte address, byte data);
-		void clear(byte start = 1);
+		void clear(byte start = 1, bool reverse = false);
 		void on();
 		void off();		
 };

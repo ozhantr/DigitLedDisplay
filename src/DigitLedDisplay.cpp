@@ -51,7 +51,12 @@ void DigitLedDisplay::off() {
 	write(SHUTDOWN_ADDR, 0x00);
 }
 
-void DigitLedDisplay::clear(byte start) {
+void DigitLedDisplay::clear(byte start, bool reverse) {
+ if (reverse)
+  for (int i = start; i <= _digitLimit; i++) {
+	write(i, B00000000);
+  }
+ else
   for (int i = _digitLimit; i >= start; i--) {
 	write(i, B00000000);
   }
