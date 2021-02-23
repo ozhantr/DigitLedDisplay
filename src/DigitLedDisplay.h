@@ -26,7 +26,7 @@ class DigitLedDisplay
 		int _digitLimit;
 		void table(byte address, int val);	
 	public:
-		DigitLedDisplay(int dinPin, int csPin, int clkPin);
+		DigitLedDisplay(int dinPin, int csPin, int clkPin, bool useHardwareSPI = false);
 		void setBright(int brightness);
 		void setDigitLimit(int limit);
 		void printDigit(long number, byte startDigit = 0);
