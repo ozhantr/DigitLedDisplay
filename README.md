@@ -37,3 +37,5 @@ void loop() {
   delay(10);
 }
 ```
+
+For additional features see [Digit7SegmentDemo.ino](examples/Digit7SegmentDemo/Digit7SegmentDemo.ino)
