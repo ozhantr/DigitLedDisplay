@@ -1,4 +1,5 @@
 #include "DigitLedDisplay.h"
+#include <SPI.h>
 
 #define DECODEMODE_ADDR 9
 #define BRIGHTNESS_ADDR	10
@@ -6,16 +7,24 @@
 #define SHUTDOWN_ADDR	12
 #define DISPLAYTEST_ADDR 15
 
+#define USE_HW_SPI 255
 
-DigitLedDisplay::DigitLedDisplay(int dinPin, int csPin, int clkPin) {
-	DIN_PIN = dinPin;
+DigitLedDisplay::DigitLedDisplay(int dinPin, int csPin, int clkPin, bool useHardwareSPI) {
 	CS_PIN = csPin;
-	CLK_PIN = clkPin;
-	
-	pinMode(DIN_PIN, OUTPUT);
 	pinMode(CS_PIN, OUTPUT);
-	pinMode(CLK_PIN, OUTPUT);
 	digitalWrite(CS_PIN, HIGH);
+
+	if (useHardwareSPI) {
+	    DIN_PIN = USE_HW_SPI;
+	    CLK_PIN = USE_HW_SPI;
+	    SPI.begin();
+	}
+	else {
+	    DIN_PIN = dinPin;
+	    CLK_PIN = clkPin;
+	    pinMode(DIN_PIN, OUTPUT);
+	    pinMode(CLK_PIN, OUTPUT);
+	}
 }
 
 void DigitLedDisplay::setBright(int brightness) {
@@ -58,10 +67,19 @@ void DigitLedDisplay::table(byte address, int val) {
 }
 
 void DigitLedDisplay::write(volatile byte address, volatile byte data) {
-	digitalWrite(CS_PIN, LOW);
-	shiftOut(DIN_PIN, CLK_PIN, MSBFIRST, address);
-	shiftOut(DIN_PIN, CLK_PIN, MSBFIRST, data);
-	digitalWrite(CS_PIN, HIGH);
+	if (DIN_PIN == USE_HW_SPI) {
+	    SPI.beginTransaction(SPISettings(10000000, MSBFIRST, SPI_MODE0));
+	    digitalWrite(CS_PIN, LOW);
+	    SPI.transfer16((address << 8) | data);
+	    digitalWrite(CS_PIN, HIGH);
+	    SPI.endTransaction();
+	}
+	else {
+	    digitalWrite(CS_PIN, LOW);
+	    shiftOut(DIN_PIN, CLK_PIN, MSBFIRST, address);
+	    shiftOut(DIN_PIN, CLK_PIN, MSBFIRST, data);
+	    digitalWrite(CS_PIN, HIGH);
+	}
 }
 
 void DigitLedDisplay::printDigit(long number, byte startDigit) {
