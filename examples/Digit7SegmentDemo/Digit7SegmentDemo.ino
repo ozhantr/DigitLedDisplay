@@ -23,9 +23,10 @@ void loop() {
   /* Prints data to the display */
   ld.printDigit(12345678);
   delay(500);
-  ld.clear();
+  /* ld.clear(); */
 
-  ld.printDigit(22222222);
+  /* clear space before (negative) number */
+  ld.printDigit(-2222, 0xFF);
   delay(500);
   ld.clear();
 
@@ -37,7 +38,7 @@ void loop() {
     ld.printDigit(i);
 
     /* Start From Digit 4 */
-    ld.printDigit(i, 4);
+    ld.printDigit(-i, 4);
     delay(50);
   }
 

@@ -16,6 +16,8 @@ DigitLedDisplay::DigitLedDisplay(int dinPin, int csPin, int clkPin) {
 	pinMode(CS_PIN, OUTPUT);
 	pinMode(CLK_PIN, OUTPUT);
 	digitalWrite(CS_PIN, HIGH);
+
+        _decimalPos = 0;
 }
 
 void DigitLedDisplay::setBright(int brightness) {
@@ -36,6 +38,10 @@ void DigitLedDisplay::setDigitLimit(int limit) {
 	write(SHUTDOWN_ADDR, 1);
 }
 
+void DigitLedDisplay::setDecimalPos(int pos) {
+	_decimalPos = pos;
+}
+
 		
 void DigitLedDisplay::on() {
 	write(SHUTDOWN_ADDR, 0x01);
@@ -45,15 +51,22 @@ void DigitLedDisplay::off() {
 	write(SHUTDOWN_ADDR, 0x00);
 }
 
-void DigitLedDisplay::clear() {
-  for (int i = 1; i <=_digitLimit; i++) {
+void DigitLedDisplay::clear(byte start, bool reverse) {
+ if (reverse)
+  for (int i = start; i <= _digitLimit; i++) {
+	write(i, B00000000);
+  }
+ else
+  for (int i = _digitLimit; i >= start; i--) {
 	write(i, B00000000);
   }
 }
 
 void DigitLedDisplay::table(byte address, int val) {
 	byte tableValue;
-	tableValue = pgm_read_byte_near(charTable + val);
+	tableValue = pgm_read_byte_near(charTable + 1 + val);
+        if (address == _decimalPos)
+            tableValue |= B10000000;
 	write(address, tableValue);
 }
 
@@ -68,12 +81,21 @@ void DigitLedDisplay::printDigit(long number, byte startDigit) {
 	String figure = String(number);
 	int figureLength = figure.length();
 
+        if (startDigit > _digitLimit) {
+            startDigit = 0;
+            clear(figureLength + 1);
+        }
+
 	int parseInt;
 	char str[2];
-	for(int i = 0; i < figure.length(); i++) {
+	for(int i = figure.length() - 1; i >=0; i--) {
+            if (i==0 && figure[i]=='-') {
+                parseInt = -1;
+            } else {
 		str[0] = figure[i];
 		str[1] = '\0';
 		parseInt = (int) strtol(str, NULL, 10);
+            }
 		table(figureLength - i + startDigit, parseInt);
 	}
 }
