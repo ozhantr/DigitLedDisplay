@@ -51,10 +51,10 @@ void DigitLedDisplay::clear() {
   }
 }
 
-void DigitLedDisplay::table(byte address, int val) {
+byte DigitLedDisplay::table(int val) {
 	byte tableValue;
 	tableValue = pgm_read_byte_near(charTable + val);
-	write(address, tableValue);
+	return tableValue;
 }
 
 void DigitLedDisplay::write(volatile byte address, volatile byte data) {
@@ -70,10 +70,34 @@ void DigitLedDisplay::printDigit(long number, byte startDigit) {
 
 	int parseInt;
 	char str[2];
+	byte tableValue;
 	for(int i = 0; i < figure.length(); i++) {
 		str[0] = figure[i];
 		str[1] = '\0';
 		parseInt = (int) strtol(str, NULL, 10);
-		table(figureLength - i + startDigit, parseInt);
+		tableValue = table( parseInt);
+		write(figureLength - i + startDigit, tableValue);
 	}
+}
+
+void DigitLedDisplay::printDigit(float number, byte startDigit, int decimalPlaces) {
+	String figure = String(number,decimalPlaces);
+	char dot = '.';
+	int dotpos = figure.indexOf(dot);
+	figure.remove(dotpos,1);
+	int figureLength = figure.length();
+
+	int parseInt;
+	char str[2];
+	byte tableValue;
+	for(int i = 0; i < figure.length(); i++) {
+		str[0] = figure[i];
+		str[1] = '\0';
+		parseInt = (int) strtol(str, NULL, 10);
+		tableValue = table(parseInt);
+		if ( i + 1 == dotpos ){
+			tableValue |= B10000000;
+		}
+		write(figureLength - i + startDigit, tableValue);
+	}	
 }

@@ -24,12 +24,13 @@ class DigitLedDisplay
 		int CS_PIN;
 		int CLK_PIN;
 		int _digitLimit;
-		void table(byte address, int val);	
+		byte table(int val);	
 	public:
 		DigitLedDisplay(int dinPin, int csPin, int clkPin);
 		void setBright(int brightness);
 		void setDigitLimit(int limit);
 		void printDigit(long number, byte startDigit = 0);
+		void printDigit(float number, byte startDigit = 0, int decimalPlaces = 2);
 		void write(byte address, byte data);
 		void clear();
 		void on();
