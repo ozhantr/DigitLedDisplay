@@ -33,7 +33,7 @@ void loop() {
   delay(500);
   ld.clear();
 
-  ld.printDigit(655555.32);
+  ld.printDigit(655555.32,0,2);
   delay(500);
   ld.clear();
 
