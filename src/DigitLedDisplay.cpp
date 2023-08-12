@@ -64,6 +64,7 @@ void DigitLedDisplay::write(volatile byte address, volatile byte data) {
 	digitalWrite(CS_PIN, HIGH);
 }
 
+/*
 void DigitLedDisplay::printDigit(long number, byte startDigit) {
 	String figure = String(number);
 	int figureLength = figure.length();
@@ -79,6 +80,7 @@ void DigitLedDisplay::printDigit(long number, byte startDigit) {
 		write(figureLength - i + startDigit, tableValue);
 	}
 }
+*/
 
 void DigitLedDisplay::printDigit(float number, byte startDigit, int decimalPlaces) {
 	String figure = String(number,decimalPlaces);
@@ -95,7 +97,7 @@ void DigitLedDisplay::printDigit(float number, byte startDigit, int decimalPlace
 		str[1] = '\0';
 		parseInt = (int) strtol(str, NULL, 10);
 		tableValue = table(parseInt);
-		if ( i + 1 == dotpos ){
+		if ( i + 1 == dotpos && decimalPlaces > 0 ){
 			tableValue |= B10000000;
 		}
 		write(figureLength - i + startDigit, tableValue);

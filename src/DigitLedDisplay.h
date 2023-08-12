@@ -29,8 +29,8 @@ class DigitLedDisplay
 		DigitLedDisplay(int dinPin, int csPin, int clkPin);
 		void setBright(int brightness);
 		void setDigitLimit(int limit);
-		void printDigit(long number, byte startDigit = 0);
-		void printDigit(float number, byte startDigit = 0, int decimalPlaces = 2);
+//		void printDigit(long number, byte startDigit = 0);
+		void printDigit(float number, byte startDigit = 0, int decimalPlaces = 0);
 		void write(byte address, byte data);
 		void clear();
 		void on();
