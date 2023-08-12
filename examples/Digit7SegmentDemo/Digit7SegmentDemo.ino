@@ -33,6 +33,14 @@ void loop() {
   delay(500);
   ld.clear();
 
+  ld.printDigit(655555.32,0,2);
+  delay(500);
+  ld.clear();
+
+  ld.printDigit(123.3333,0,4);
+  delay(500);
+  ld.clear();
+
   for (int i = 0; i < 100; i++) {
     ld.printDigit(i);
 
